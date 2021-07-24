@@ -1,0 +1,98 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class List{
+    main()
+    start()
+
+}
+class ListController{
++TableColumn<ItemObject, String> ItemName;
++TableColumn<ItemObject, String> ItemDescription;
++TableColumn<ItemObject, String> ItemDueDate;
++TableColumn<ItemObject, String> ItemStatus;
++TableView<ItemObject> itemTable;
++TextField addItemName;
++Text pathToFile;
++TextField addItemDescription;
++Button loadListButton;
++DatePicker addItemDueDate;
++DatePicker updateDate;
++void editTitleClick()
++void editDescriptionClick()
++void addNewItemClick()
++void removeItemClick()
++void editDueDateClick()
++void markCompleteClick()
++void markIncompleteCLick()
++void showCompleteClick()
++void showAllClick()
++void loadListClick()
++void loadHelper()
++void removeAllCLick()
++void helpButtonClick()
++void saveListAsClick()
+}
+
+class EditItem{
+int length
+FileIO change
+String[] properties
+String[] selectedProperties
+String currentLine
+String newPath
+File file
++String addItem(String, String[])
++boolean removeItem(String, ItemObject)
++boolean matches(ItemObject, ItemObject)
++boolean editDescription(String, ItemObject, String)
++boolean editDueDate(String, ItemObject, String)
++boolean markIncomplete(String, ItemObject)
++boolean markComplete(String, ItemObject)
+}
+
+class ItemObject{
+    private final SimpleStringProperty name;
+    private final SimpleStringProperty description;
+    private final SimpleStringProperty dueDate;
+    private final SimpleStringProperty status;
+    +String getDescription()
+    +SimpleStringProperty descriptionProperty()
+    +void setDescription()
+    +String getDueDate()
+    +SimpleStringProperty dueDateProperty()
+    +void setDueDate(String)
+    +String getStatus()
+    +SimpleStringProperty statusProperty()
+    +void setStatus(String)
+    +String getName()
+    +SimpleStringProperty nameProperty()
+    +void setName(String)
+    +ItemObject(String, String, String, String)
+}
+
+class EditList{
+    ArrayList<ItemObject> itemsInList
+    String currentLine
+    String[] properties
+    ItemObject tempItem
+    +File loadList(String)
+    +ArrayList<ItemObject> getInfo(File)
+    +ArrayList<ItemObject> getCompletedInfo(File)
+    +ArrayList<ItemObject> getIncompleteInfo(File)
+    +boolean saveList(String, String)
+    +boolean removeAll(String)
+}
+
+
+
+javafx.Application <|-- ListController
+
+ListController -- List
+ListController -- EditItem
+ListController -- ItemObject
+ListController -- EditList
+
+
+
+@enduml

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.ListController">
+    <children>
+        <Button layoutX="11.0" layoutY="306.0" mnemonicParsing="false" onAction="#editSerialClick" prefHeight="25.0" prefWidth="134.0" text="Update Serial Number" />
+        <Button layoutX="155.0" layoutY="200.0" mnemonicParsing="false" onAction="#addNewItemClick" prefHeight="25.0" prefWidth="75.0" text="Add Item" />
+        <Button layoutX="11.0" layoutY="200.0" mnemonicParsing="false" onAction="#removeItemClick" prefHeight="25.0" prefWidth="134.0" text="Remove Item" />
+        <Button layoutX="11.0" layoutY="234.0" mnemonicParsing="false" onAction="#editValueClick" prefHeight="25.0" prefWidth="134.0" text="Update Value" />
+        <Button layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#searchSerialClick" prefHeight="25.0" prefWidth="216.0" text="Search By Serial Number" />
+        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchNameClick" prefHeight="25.0" prefWidth="216.0" text="Search By Name" />
+        <Accordion layoutX="175.0" layoutY="189.0" />
+        <TableView fx:id="itemTable" layoutX="235.0" layoutY="14.0" prefHeight="174.0" prefWidth="509.0">
+            <columns>
+                <TableColumn fx:id="ItemValue" prefWidth="137.0" resizable="false" text="Value" />
+                <TableColumn fx:id="ItemSerial" prefWidth="152.0" resizable="false" text="Serial Number" />
+                <TableColumn fx:id="ItemName" minWidth="0.0" prefWidth="218.0" resizable="false" text="Name" />
+            </columns>
+        </TableView>
+        <TextField fx:id="addItemValue" layoutX="235.0" layoutY="200.0" prefHeight="25.0" prefWidth="124.0" promptText="Value" />
+        <TextField fx:id="addItemSerial" layoutX="375.0" layoutY="199.0" prefHeight="25.0" prefWidth="169.0" promptText="Serial Number" />
+        <Button fx:id="loadListButton" layoutX="568.0" layoutY="359.0" mnemonicParsing="false" onAction="#loadListClick" prefHeight="25.0" prefWidth="82.0" text="Load List" />
+        <Button layoutX="650.0" layoutY="359.0" mnemonicParsing="false" onAction="#saveListAsClick" prefHeight="25.0" prefWidth="82.0" text="Save List As" />
+        <Text fx:id="pathToFile" layoutX="19.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="555.13671875" />
+        <TextField fx:id="updateSerial" layoutX="153.0" layoutY="306.0" prefHeight="25.0" prefWidth="582.0" promptText="Updated Serial Number" />
+        <TextField fx:id="updateValue" layoutX="153.0" layoutY="234.0" prefHeight="25.0" prefWidth="582.0" promptText="Updated Value" />
+        <Button layoutX="11.0" layoutY="269.0" mnemonicParsing="false" onAction="#editNameClick" prefHeight="25.0" prefWidth="134.0" text="Update Name" />
+        <TextField fx:id="updateName" layoutX="153.0" layoutY="269.0" prefHeight="25.0" prefWidth="582.0" promptText="Updated Name" />
+        <TextField fx:id="nameText" alignment="CENTER" layoutX="14.0" layoutY="47.0" prefHeight="25.0" prefWidth="216.0" promptText="Name" />
+        <TextField fx:id="serialText" alignment="CENTER" layoutX="14.0" layoutY="117.0" prefHeight="25.0" prefWidth="216.0" promptText="Serial Number" />
+        <TextField fx:id="addItemName" layoutX="560.0" layoutY="199.0" prefHeight="25.0" prefWidth="180.0" promptText="Name" />
+    </children>
+</AnchorPane>

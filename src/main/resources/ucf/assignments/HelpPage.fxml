@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="412.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea editable="false" layoutX="15.0" layoutY="14.0" prefHeight="385.0" prefWidth="580.0" text="Adding a new Item:&#10;      Fill out the item description, date, and name fields&#10;      Click &quot;Add New Item&quot;&#10;Removing an Item:&#10;      Select a task from the tableview&#10;      Click &quot;Remove Item&quot;&#10;Marking task status&#10;      Select a task from the tableview&#10;      Click &quot;Mark as Complete&quot; or &quot;Mark as Incomplete&quot;&#10;Updating Item Description:&#10;      Select a task from the tableview&#10;      Fill out new item description text field&#10;      Click &quot;Update Description&quot;&#10;Updating Item Due Date:&#10;      Select a task from the tableview&#10;      Fill out new item date&#10;      Click &quot;Update Due Date&quot;&#10;Saving the list:&#10;      Each list is saved automatically&#10;      If no list has been loaded, a file name &quot;ToDoList.txt&quot; is created/used in working directory and is loaded&#10;      Every change made to the loaded list is saved automatically&#10;      User can click the &quot;Save List As&quot; button to save the loaded list in custom location with custom name" />
+   </children>
+</AnchorPane>
