@@ -62,8 +62,8 @@ public class EditList {
         return itemsInList;
     }
 
-    public ArrayList<ItemObject> getCompletedInfo(File file) {
-        System.out.println("Entered LoadList.getCompletedInfo");
+    public ArrayList<ItemObject> searchName(File file, String name) {
+        System.out.println("Entered LoadList.searchName looking for "+name);
         ArrayList<ItemObject> itemsInList = new ArrayList<>();
 
         String currentLine;
@@ -77,10 +77,9 @@ public class EditList {
             while(currentLine != null)   {
                 System.out.printf("%s\n",currentLine);
                 properties = currentLine.split("::");
-                System.out.printf("Name: %s\nDescription: %s\nDue Date: %s\nStatus: %s\n", properties[0],properties[1],properties[2],properties[3] );
                 ItemObject tempItem = new ItemObject(properties[0],properties[1],properties[2]);
 
-                if(properties[3].contains("Complete")) {
+                if(properties[2].contains(name)) {
                     itemsInList.add(tempItem);
                 }
                 currentLine = bufferedReader.readLine();
@@ -94,8 +93,8 @@ public class EditList {
         return itemsInList;
     }
 
-    public ArrayList<ItemObject> getIncompleteInfo(File file) {
-        System.out.println("Entered LoadList.getIncompleteInfo");
+    public ArrayList<ItemObject> searchSerial(File file, String serial) {
+        System.out.println("Entered LoadList.searchSerial");
         ArrayList<ItemObject> itemsInList = new ArrayList<>();
 
         String currentLine;
@@ -109,10 +108,9 @@ public class EditList {
             while(currentLine != null)   {
                 System.out.printf("%s\n",currentLine);
                 properties = currentLine.split("::");
-                System.out.printf("Name: %s\nDescription: %s\nDue Date: %s\nStatus: %s\n", properties[0],properties[1],properties[2],properties[3] );
                 ItemObject tempItem = new ItemObject(properties[0],properties[1],properties[2]);
 
-                if(properties[3].contains("Incomplete")) {
+                if(properties[1].contains(serial)) {
                     itemsInList.add(tempItem);
                 }
                 currentLine = bufferedReader.readLine();
@@ -150,16 +148,5 @@ public class EditList {
         return exists;
     }
 
-    public boolean removeAll(String path)   {
-        boolean removed = false;
-        try {
-            new FileWriter(path, false).close();
-           removed = true;
-        }
-        catch(Exception ignored){
-
-        }
-        return removed;
-    }
 
 }

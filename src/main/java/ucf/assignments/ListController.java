@@ -145,7 +145,21 @@ public class ListController extends List {
 
         EditList load = new EditList();
         File file = load.loadList(pathToFile.getText());
-        ArrayList<ItemObject> items = load.getIncompleteInfo(file);
+        ArrayList<ItemObject> items = load.searchSerial(file, serialText.getText());
+        ObservableList<ItemObject> observableItems = FXCollections.observableArrayList(items);
+
+        ItemValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        ItemSerial.setCellValueFactory(new PropertyValueFactory<>("serial"));
+        ItemName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        serialText.setText("");
+        itemTable.setItems(observableItems);
+    }
+    @FXML
+    public void searchNameClick() {
+        //simply grab and show everything in txt file
+        EditList load = new EditList();
+        File file = load.loadList(pathToFile.getText());
+        ArrayList<ItemObject> items = load.searchName(file, nameText.getText());
         ObservableList<ItemObject> observableItems = FXCollections.observableArrayList(items);
 
         ItemValue.setCellValueFactory(new PropertyValueFactory<>("value"));
@@ -153,11 +167,7 @@ public class ListController extends List {
         ItemName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         itemTable.setItems(observableItems);
-    }
-    @FXML
-    public void searchNameClick() {
-        //simply grab and show everything in txt file
-        loadHelper();
+        nameText.setText("");
     }
 
 
@@ -258,6 +268,10 @@ public class ListController extends List {
             noSelection.show();
         }
         updateValue.setText("");
+        loadHelper();
+    }
+
+    public void showAllClick(ActionEvent actionEvent) {
         loadHelper();
     }
 }

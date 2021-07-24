@@ -100,7 +100,7 @@ class EditListTest {
         edit.markComplete("TestIncomplete.txt", testItem2);
         testItem2.setStatus("Complete");
 
-        ArrayList<ItemObject> actualItems = load.getIncompleteInfo(file);
+        ArrayList<ItemObject> actualItems = load.searchSerial(file);
         Assertions.assertEquals(true, edit.matches(testItem1, actualItems.get(0)));
         file.delete();
     }

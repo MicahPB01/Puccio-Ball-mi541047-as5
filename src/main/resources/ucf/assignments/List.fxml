@@ -14,8 +14,8 @@
         <Button layoutX="155.0" layoutY="200.0" mnemonicParsing="false" onAction="#addNewItemClick" prefHeight="25.0" prefWidth="75.0" text="Add Item" />
         <Button layoutX="11.0" layoutY="200.0" mnemonicParsing="false" onAction="#removeItemClick" prefHeight="25.0" prefWidth="134.0" text="Remove Item" />
         <Button layoutX="11.0" layoutY="234.0" mnemonicParsing="false" onAction="#editValueClick" prefHeight="25.0" prefWidth="134.0" text="Update Value" />
-        <Button layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#searchSerialClick" prefHeight="25.0" prefWidth="216.0" text="Search By Serial Number" />
-        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchNameClick" prefHeight="25.0" prefWidth="216.0" text="Search By Name" />
+        <Button layoutX="11.0" layoutY="126.0" mnemonicParsing="false" onAction="#searchSerialClick" prefHeight="25.0" prefWidth="216.0" text="Search By Serial Number" />
+        <Button layoutX="11.0" layoutY="60.0" mnemonicParsing="false" onAction="#searchNameClick" prefHeight="25.0" prefWidth="216.0" text="Search By Name" />
         <Accordion layoutX="175.0" layoutY="189.0" />
         <TableView fx:id="itemTable" layoutX="235.0" layoutY="14.0" prefHeight="174.0" prefWidth="509.0">
             <columns>
@@ -33,8 +33,9 @@
         <TextField fx:id="updateValue" layoutX="153.0" layoutY="234.0" prefHeight="25.0" prefWidth="582.0" promptText="Updated Value" />
         <Button layoutX="11.0" layoutY="269.0" mnemonicParsing="false" onAction="#editNameClick" prefHeight="25.0" prefWidth="134.0" text="Update Name" />
         <TextField fx:id="updateName" layoutX="153.0" layoutY="269.0" prefHeight="25.0" prefWidth="582.0" promptText="Updated Name" />
-        <TextField fx:id="nameText" alignment="CENTER" layoutX="14.0" layoutY="47.0" prefHeight="25.0" prefWidth="216.0" promptText="Name" />
-        <TextField fx:id="serialText" alignment="CENTER" layoutX="14.0" layoutY="117.0" prefHeight="25.0" prefWidth="216.0" promptText="Serial Number" />
+        <TextField fx:id="nameText" alignment="CENTER" layoutX="11.0" layoutY="93.0" prefHeight="25.0" prefWidth="216.0" promptText="Name" />
+        <TextField fx:id="serialText" alignment="CENTER" layoutX="11.0" layoutY="163.0" prefHeight="25.0" prefWidth="216.0" promptText="Serial Number" />
         <TextField fx:id="addItemName" layoutX="560.0" layoutY="199.0" prefHeight="25.0" prefWidth="180.0" promptText="Name" />
+      <Button layoutX="11.0" layoutY="21.0" mnemonicParsing="false" onAction="#showAllClick" prefHeight="25.0" prefWidth="216.0" text="Show All" />
     </children>
 </AnchorPane>
