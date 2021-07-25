@@ -215,7 +215,7 @@ public class ListController extends List {
         //copy current in use file to the placed they decided to save
         EditList save = new EditList();
         save.saveList(pathToFile.getText(), "");
-        loadHelper();
+        //loadHelper();
 
     }
 
