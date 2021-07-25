@@ -11,11 +11,14 @@ import javafx.stage.Stage;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class EditList {
     public File loadList(String path) {
@@ -32,17 +35,21 @@ public class EditList {
         else   {
             file = new File(path);
         }
-
         return file;
     }
 
-    public ArrayList<ItemObject> getInfo(File file) {
+    public ArrayList<ItemObject> getInfo(File file) throws IOException {
         System.out.println("Entered LoadList.getInfo");
         ArrayList<ItemObject> itemsInList = new ArrayList<>();
 
         String ext = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")+1);
         String currentLine;
         String[] properties;
+
+        if(ext.equalsIgnoreCase("html"))   {
+            convertHTML(file);
+            file = new File("tempHTML.txt");
+        }
 
         try {
             FileReader input = new FileReader(file);
@@ -51,7 +58,7 @@ public class EditList {
             currentLine = bufferedReader.readLine();
 
 
-            if(ext.equalsIgnoreCase("txt")) {
+
                 while (currentLine != null) {
                     System.out.printf("%s\n", currentLine);
                     properties = currentLine.split("\t");
@@ -59,7 +66,7 @@ public class EditList {
                     itemsInList.add(tempItem);
                     currentLine = bufferedReader.readLine();
                 }
-            }
+
 
 
             bufferedReader.close();
@@ -239,7 +246,7 @@ public class EditList {
                         + data.get(i).getValue()
                         + "<br></th>\n  <th class=\"tg-0lax\">" + data.get(i).getSerial()
                         + "<br></th>\n  <th class=\"tg-0lax\">" + data.get(i).getName()
-                        +  "\"<br></th>\n").getBytes(), StandardOpenOption.APPEND);
+                        +  "<br></th>\n").getBytes(), StandardOpenOption.APPEND);
                 Files.write((filePath), ("  </tr>\n" +
                         "</thead>\n" +
                         "<tbody>\n" +
@@ -258,6 +265,84 @@ public class EditList {
 
         return false;
     }
+
+    public void convertHTML(File file) throws IOException {
+        System.out.println("Entered convertHTML");
+        File tempFile =  new File("tempHTML.txt");
+        Path filePath  = Path.of(tempFile.getAbsolutePath());
+        String currentLine = null;
+        String[] properties = new String[3];
+        char[] breakDown;
+        tempFile.createNewFile();
+        String rebuiltString = "";
+        int numLines;
+        int numItems;
+
+
+        try (Stream<String> stream = Files.lines(file.toPath(), StandardCharsets.UTF_8)) {
+            numLines = (int) stream.count();
+            stream.close();
+        }
+
+        numItems = (numLines - 11) % 3;
+
+        try {
+            FileReader input = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(input);
+
+            for(int i = 0; i < 11; i++) {
+                currentLine = bufferedReader.readLine();
+                System.out.println("Skipping " + currentLine);
+            }
+            currentLine = bufferedReader.readLine();
+            while (currentLine != null) {
+
+                for (int k = 0; k < numItems; k++) {
+
+                    for (int i = 0; i < 3; i++) {
+                        System.out.println("Checking: " + currentLine);
+                        rebuiltString = "";
+
+                        breakDown = currentLine.toCharArray();
+                        System.out.println("line is " + currentLine.length());
+                        for (int j = 22; j < currentLine.length(); j++) {
+                            System.out.println("Starting char is: " + breakDown[j]);
+                            System.out.println("Adding " + breakDown[j] + " to " + rebuiltString);
+
+                            if (Character.compare(breakDown[j], '<') == 0) {
+                                break;
+                            }
+
+                            rebuiltString = rebuiltString + breakDown[j] + "";
+                            System.out.println(rebuiltString);
+                        }
+                        properties[i] = rebuiltString.toString();
+                        System.out.println("Found property: " + rebuiltString);
+                        currentLine = bufferedReader.readLine();
+
+                    }
+                    System.out.println("Adding item");
+                    Files.write(filePath, (properties[0] + "\t" + properties[1] + "\t" + properties[2] + "\n").getBytes(), StandardOpenOption.APPEND);
+
+                    for(int i = 0; i < 4; i++)   {
+                        currentLine = bufferedReader.readLine();
+                    }
+                }
+            }
+
+
+
+            bufferedReader.close();
+        }
+        catch(Exception ignored)   {
+
+        }
+
+
+        return;
+    }
+
+
 
 
 }

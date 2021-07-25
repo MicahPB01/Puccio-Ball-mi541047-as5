@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class EditItem {
@@ -54,8 +55,12 @@ public class EditItem {
         Path filePath = Path.of(path);
 
         try   {
+            if(ext.equalsIgnoreCase("txt")) {
                 Files.write((filePath), ("$" + properties[0] + "\t" + properties[1] + "\t" + properties[2] + "\n").getBytes(), StandardOpenOption.APPEND);
+            }
+            if(ext.equalsIgnoreCase("html"))    {
 
+            }
         }
         catch(Exception ignored)   {
         }
@@ -83,6 +88,7 @@ public class EditItem {
 
                 if(properties[1].equalsIgnoreCase(serial))   {
                     System.out.println("Found serial");
+                    bufferedReader.close();
                     return true;
                 }
                 currentLine = bufferedReader.readLine();
@@ -90,12 +96,13 @@ public class EditItem {
             bufferedReader.close();
         }
         catch(Exception ignored) {}
+
         System.out.println("Didn't find serial");
         return false;
     }
 
 
-    public boolean removeItem(String path, ItemObject item) throws IOException {
+    public boolean removeItem(String path, ItemObject item) throws IOException, InterruptedException {
         //find an entry in the txt file the matches the object the user selected
         //when the line is found call to the FileIO class
 
@@ -130,6 +137,7 @@ public class EditItem {
                 }
                 else   {
                     System.out.println("Found item");
+                    bufferedReader.close();
                     removed = true;
                 }
                 currentLine = bufferedReader.readLine();
@@ -236,6 +244,7 @@ public class EditItem {
 
         if(checkSerial(path, newSerial))   {
             System.out.println("Bad Serial copy");
+
             return false;
         }
 
@@ -265,6 +274,7 @@ public class EditItem {
                     currentLine = properties[0]+"\t"+newSerial+"\t"+properties[2];
                     updated = true;
                     newFileData.add(currentLine);
+
                 }
                 currentLine = bufferedReader.readLine();
             }

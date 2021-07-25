@@ -6,6 +6,7 @@ package ucf.assignments;
  *  Name::Description::DueDate
  */
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +17,8 @@ import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ListController extends List {
@@ -36,14 +39,6 @@ public class ListController extends List {
     public TextField updateValue;
     public TextField updateName;
 
-
-    public void initialize ()    {
-        File file = new File("Inventory.txt");
-        if(file.exists())   {
-            pathToFile.setText(file.getAbsolutePath());
-            loadHelper();
-        }
-    }
 
     @FXML
     public void addNewItemClick() throws IOException {
@@ -69,7 +64,6 @@ public class ListController extends List {
 
         if(!result)   {
             System.out.println("Loading");
-            loadHelper();
         }
         else   {
             Alert noSelection = new Alert(Alert.AlertType.INFORMATION);
@@ -78,12 +72,12 @@ public class ListController extends List {
             noSelection.setContentText("Please ensure the Serial matches \"XXXXXXXXXX\"\nPlease ensure serial is unique!\nPlease ensure the value is a number!,");
             noSelection.show();
         }
-
+        loadHelper();
 
 
     }
     @FXML
-    public void removeItemClick() throws IOException {
+    public void removeItemClick() throws IOException, InterruptedException {
         //get info of selected item in list
         //Call removeItem in editItem class passing the itemObject
         //if no item is selected, throw up a message
@@ -116,11 +110,14 @@ public class ListController extends List {
         if(itemTable.getSelectionModel().getSelectedItem()!=null)    {
             ItemObject selectedObject = itemTable.getSelectionModel().getSelectedItem();
             check = edit.editSerial(pathToFile.getText(), selectedObject, updateSerial.getText());
-            if(!check)   {
+            if(check)   {
+                edit.editSerial(pathToFile.getText(), selectedObject, updateSerial.getText());
+            }
+            else   {
                 Alert noSelection = new Alert(Alert.AlertType.INFORMATION);
                 noSelection.setTitle("Unable to edit Serial!");
-                noSelection.setHeaderText("Serial does not meet requirements!");
-                noSelection.setContentText("Serial number should match \"XXXXXXXXXX\"\nSerial should be unique!\n");
+                noSelection.setHeaderText("Requirements not met!");
+                noSelection.setContentText("Serial must be unique!\n");
                 noSelection.show();
             }
         }
@@ -172,7 +169,7 @@ public class ListController extends List {
 
 
     @FXML
-    public void loadListClick() {
+    public void loadListClick() throws IOException {
         //set the in use file path to nothing to force program to change path
         pathToFile.setText("");
 
@@ -183,7 +180,7 @@ public class ListController extends List {
         loadHelper();
     }
 
-    public void loadHelper() {
+    public void loadHelper() throws IOException {
         System.out.println("Entered load helper");
         //get current file path
         //call load from the LoadList class passing the path
@@ -193,12 +190,15 @@ public class ListController extends List {
 
         EditList load = new EditList();
         File file = load.loadList(pathToFile.getText());
+
+
         pathToFile.setText(file.getPath());
         ArrayList<ItemObject> items = load.getInfo(file);
         ObservableList<ItemObject> observableItems = FXCollections.observableArrayList(items);
         addItemValue.setText("");
         addItemSerial.setText("");
         addItemName.setText("");
+
 
         ItemValue.setCellValueFactory(new PropertyValueFactory<>("value"));
         ItemSerial.setCellValueFactory(new PropertyValueFactory<>("serial"));
@@ -215,7 +215,7 @@ public class ListController extends List {
         //copy current in use file to the placed they decided to save
         EditList save = new EditList();
         save.saveList(pathToFile.getText(), "");
-        //loadHelper();
+        loadHelper();
 
     }
 
@@ -271,7 +271,8 @@ public class ListController extends List {
         loadHelper();
     }
 
-    public void showAllClick(ActionEvent actionEvent) {
+    public void showAllClick(ActionEvent actionEvent) throws IOException {
         loadHelper();
     }
+
 }
