@@ -1,10 +1,8 @@
 package ucf.assignments;
 
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Micah Puccio-Ball
- *  Tasks are saved as...
- *  Name::Description::DueDate::Status
  */
 
 import java.io.BufferedReader;
@@ -21,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class EditItem {
 
     public boolean addItem(String path, String[] properties)   {
+        //check requirements
         //shorten description to 256 characters
         //add a line of text to txt file using item properties
         System.out.println("Entered EditItem.addItem");
@@ -56,7 +55,7 @@ public class EditItem {
 
         try   {
             if(ext.equalsIgnoreCase("txt")) {
-                Files.write((filePath), ("$" + properties[0] + "\t" + properties[1] + "\t" + properties[2] + "\n").getBytes(), StandardOpenOption.APPEND);
+                Files.write((filePath), (properties[0] + "\t" + properties[1] + "\t" + properties[2] + "\n").getBytes(), StandardOpenOption.APPEND);
             }
             if(ext.equalsIgnoreCase("html"))    {
 
@@ -71,6 +70,8 @@ public class EditItem {
     }
 
     public boolean checkSerial(String path, String serial)   {
+        //take input file and check every line
+        //if the second split in a line matches the serial trying to be added, return true
         System.out.println("Checking serial in file" + path);
         String ext = path.substring((path.lastIndexOf(".")  + 1));
         String currentLine;
@@ -114,22 +115,25 @@ public class EditItem {
         String[] selectedProperties = new String[3];
         String currentLine;
         String newPath;
-        selectedProperties[0] = item.getValue();
+        selectedProperties[0] = String.valueOf(item.getValue());
         selectedProperties[1] = item.getSerial();
         selectedProperties[2] = item.getName();
         ArrayList<String> newFileData = new ArrayList<>();
 
         File file = new File(path);
         try {
+
             FileReader input = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(input);
 
             currentLine = bufferedReader.readLine();
+
             while(currentLine != null)   {
 
                 properties = currentLine.split("\t");
+                System.out.println("CHecking: " + properties[0] + properties[1] + properties[2]);
 
-                ItemObject tempItem = new ItemObject(properties[0],properties[1],properties[2]);
+                ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
 
                 if(!matches(item, tempItem))   {
                     newFileData.add(currentLine);
@@ -137,7 +141,6 @@ public class EditItem {
                 }
                 else   {
                     System.out.println("Found item");
-                    bufferedReader.close();
                     removed = true;
                 }
                 currentLine = bufferedReader.readLine();
@@ -161,8 +164,8 @@ public class EditItem {
     }
 
     public boolean editValue(String path, ItemObject item, String newValue) throws  IOException   {
-        //check if serial is already taken
-        //check if serial meets length/char requirement
+        //check if value is already taken
+        //check if value meets length/char requirement
         //Find the line in the txt file which matches the selected object
         //once the correct task is found, remove the line, replacing it with the same thing except with the new description
         //call to FileIO class
@@ -175,7 +178,7 @@ public class EditItem {
         String[] selectedProperties = new String[3];
         String currentLine;
         String newPath;
-        selectedProperties[0] = item.getValue();
+        selectedProperties[0] = String.valueOf(item.getValue());
         selectedProperties[1] = item.getSerial();
         selectedProperties[2] = item.getName();
         ArrayList<String> newFileData = new ArrayList<>();
@@ -195,7 +198,7 @@ public class EditItem {
             while(currentLine != null)   {
                 properties = currentLine.split("\t");
 
-                ItemObject tempItem = new ItemObject(properties[0],properties[1],properties[2]);
+                ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
                 System.out.printf("Checking: %s %s %s\n",properties[0] , properties[1] , properties[2]);
 
                 if(!matches(item, tempItem))   {
@@ -203,7 +206,7 @@ public class EditItem {
                 }
                 else   {
                     System.out.println("Found");
-                    currentLine = "$" + newValue+"\t"+properties[1]+"\t"+properties[2];
+                    currentLine =  newValue+"\t"+properties[1]+"\t"+properties[2];
                     updated = true;
                     newFileData.add(currentLine);
                 }
@@ -236,7 +239,7 @@ public class EditItem {
         String ext = path.substring((path.lastIndexOf(".")  + 1));
         String currentLine;
         String newPath;
-        selectedProperties[0] = item.getValue();
+        selectedProperties[0] = String.valueOf(item.getValue());
         selectedProperties[1] = item.getSerial();
         selectedProperties[2] = item.getName();
         ArrayList<String> newFileData = new ArrayList<>();
@@ -263,7 +266,7 @@ public class EditItem {
             while(currentLine != null)   {
                 properties = currentLine.split("\t");
 
-                ItemObject tempItem = new ItemObject(properties[0],properties[1],properties[2]);
+                ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
                 System.out.printf("Checking: %s %s %s\n",properties[0] , properties[1] , properties[2]);
 
                 if(!matches(item, tempItem))   {
@@ -301,7 +304,7 @@ public class EditItem {
         String currentLine;
         String newPath;
         String ext = path.substring((path.lastIndexOf(".")  + 1));
-        selectedProperties[0] = item.getValue();
+        selectedProperties[0] = String.valueOf(item.getValue());
         selectedProperties[1] = item.getSerial();
         selectedProperties[2] = item.getName();
         ArrayList<String> newFileData = new ArrayList<>();
@@ -319,7 +322,7 @@ public class EditItem {
             while(currentLine != null)   {
                 properties = currentLine.split("\t");
 
-                ItemObject tempItem = new ItemObject(properties[0],properties[1],properties[2]);
+                ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
                 System.out.printf("Checking: %s %s %s\n",properties[0] , properties[1] , properties[2]);
 
                 if(!matches(item, tempItem))   {
@@ -343,7 +346,6 @@ public class EditItem {
 
         return updated;
     }
-
 
 
 }

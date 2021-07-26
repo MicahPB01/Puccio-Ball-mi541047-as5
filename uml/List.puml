@@ -43,32 +43,23 @@ String currentLine
 String newPath
 File file
 +String addItem(String, String[])
++boolean checkSerial(String, String)
 +boolean removeItem(String, ItemObject)
 +boolean matches(ItemObject, ItemObject)
-+boolean editDescription(String, ItemObject, String)
-+boolean editDueDate(String, ItemObject, String)
-+boolean markIncomplete(String, ItemObject)
-+boolean markComplete(String, ItemObject)
++boolean editValue(String path, ItemObject, String)
++boolean editSerial(String, ItemObject, String)
++boolean editName(String, ItemObject,newName)
+
 }
 
 class ItemObject{
-    private final SimpleStringProperty name;
-    private final SimpleStringProperty description;
-    private final SimpleStringProperty dueDate;
-    private final SimpleStringProperty status;
-    +String getDescription()
-    +SimpleStringProperty descriptionProperty()
-    +void setDescription()
-    +String getDueDate()
-    +SimpleStringProperty dueDateProperty()
-    +void setDueDate(String)
-    +String getStatus()
-    +SimpleStringProperty statusProperty()
-    +void setStatus(String)
+    -SimpleStringProperty serial;
+    -SimpleStringProperty name;
+    -SimpleIntegerProperty value;
+    +String getSerial()
     +String getName()
-    +SimpleStringProperty nameProperty()
-    +void setName(String)
-    +ItemObject(String, String, String, String)
+    +Integer getValue()
+    +ItemObject(Integer, String, String)
 }
 
 class EditList{
@@ -78,10 +69,12 @@ class EditList{
     ItemObject tempItem
     +File loadList(String)
     +ArrayList<ItemObject> getInfo(File)
-    +ArrayList<ItemObject> getCompletedInfo(File)
-    +ArrayList<ItemObject> getIncompleteInfo(File)
+    +ArrayList<ItemObject> searchName(File, String)
+    +ArrayList<ItemObject> searchSerial(File, String)
     +boolean saveList(String, String)
-    +boolean removeAll(String)
+    +boolean tabSave(String, File)
+    +boolean htmlSave(String, File)
+    +void convertHTML(File)
 }
 
 

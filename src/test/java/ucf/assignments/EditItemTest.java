@@ -21,13 +21,12 @@ class EditItemTest {
         EditItem edit = new EditItem();
         File file = new File("TestAdd.txt");
         file.createNewFile();
-        String[] properties = new String[4];
-        String[] selectedProperties = new String[4];
+        String[] properties = new String[3];
+        String[] selectedProperties = new String[3];
         String currentLine;
-        selectedProperties[0] = "Test task";
-        selectedProperties[1] = "Test Description";
-        selectedProperties[2] = "2021/7/10";
-        selectedProperties[3] = "Incomplete";
+        selectedProperties[0] = "1234";
+        selectedProperties[1] = "2345234523";
+        selectedProperties[2] = "MMicah";
 
         edit.addItem("TestAdd.txt", selectedProperties);
         try {
@@ -36,7 +35,7 @@ class EditItemTest {
 
             currentLine = bufferedReader.readLine();
             while(currentLine != null)   {
-                properties = currentLine.split("::");
+                properties = currentLine.split("\t");
 
                 currentLine = bufferedReader.readLine();
             }
@@ -52,7 +51,7 @@ class EditItemTest {
 
     }
     @Test
-    void checkRemoveItem() throws IOException {
+    void checkRemoveItem() throws IOException, InterruptedException {
         //create list with a sample task
         //call removeItem from EditItem class
         //if function returns true, the task has been removed
@@ -62,42 +61,40 @@ class EditItemTest {
         String[] properties = new String[4];
         String[] selectedProperties = new String[4];
         String currentLine;
-        selectedProperties[0] = "Test task";
-        selectedProperties[1] = "Test Description";
-        selectedProperties[2] = "2021/7/10";
-        selectedProperties[3] = "Incomplete";
+        selectedProperties[0] = "1234";
+        selectedProperties[1] = "2345234523";
+        selectedProperties[2] = "MMicah";
 
         edit.addItem("TestRemove.txt", selectedProperties);
-        ItemObject testItem = new ItemObject(selectedProperties[0],selectedProperties[1], selectedProperties[2]);
+        ItemObject testItem = new ItemObject(Integer.parseInt(selectedProperties[0]) ,selectedProperties[1], selectedProperties[2]);
         Assertions.assertEquals(true, edit.removeItem("TestRemove.txt", testItem));
         file.delete();
 
     }
 
     @Test
-    void checkEditDescription() throws IOException {
+    void checkEditValue() throws IOException {
         //create sample task in sample list
         //call editDescription from EditItem class
         EditItem edit = new EditItem();
         File file = new File("TestEditDescription.txt");
         file.createNewFile();
-        String[] properties = new String[4];
-        String[] selectedProperties = new String[4];
+        String[] properties = new String[3];
+        String[] selectedProperties = new String[3];
         String currentLine;
-        selectedProperties[0] = "Test task";
-        selectedProperties[1] = "Test Description";
-        selectedProperties[2] = "2021/7/10";
-        selectedProperties[3] = "Incomplete";
+        selectedProperties[0] = "1234";
+        selectedProperties[1] = "2345234523";
+        selectedProperties[2] = "MMicah";
 
         edit.addItem("TestEditDescription.txt", selectedProperties);
-        ItemObject testItem = new ItemObject(selectedProperties[0],selectedProperties[1], selectedProperties[2]);
-        Assertions.assertEquals(true, edit.editSerial("TestEditDescription.txt", testItem, "Updated Description"));
+        ItemObject testItem = new ItemObject(Integer.parseInt(selectedProperties[0]),selectedProperties[1], selectedProperties[2]);
+        Assertions.assertEquals(true, edit.editSerial("TestEditDescription.txt", testItem, "yuioyuioyu"));
         file.delete();
 
     }
 
     @Test
-    void checkEditDueDate() throws IOException {
+    void checkEditSerial() throws IOException {
         //create a sample task in sample list
         //call editDueDate fro EditItem class
         EditItem edit = new EditItem();
@@ -106,65 +103,36 @@ class EditItemTest {
         String[] properties = new String[4];
         String[] selectedProperties = new String[4];
         String currentLine;
-        selectedProperties[0] = "Test task";
-        selectedProperties[1] = "Test Description";
-        selectedProperties[2] = "2021/7/10";
-        selectedProperties[3] = "Incomplete";
+        selectedProperties[0] = "1234";
+        selectedProperties[1] = "2345234523";
+        selectedProperties[2] = "MMicah";
 
         edit.addItem("TestEditDueDate.txt", selectedProperties);
-        ItemObject testItem = new ItemObject(selectedProperties[0],selectedProperties[1], selectedProperties[2]);
-        Assertions.assertEquals(true, edit.editName("TestEditDueDate.txt", testItem, "1010/7/10"));
+        ItemObject testItem = new ItemObject(Integer.parseInt(selectedProperties[0]),selectedProperties[1], selectedProperties[2]);
+        Assertions.assertEquals(true, edit.editSerial("TestEditDueDate.txt", testItem, "1234123412"));
         file.delete();
 
     }
 
     @Test
-    void checkMarkComplete() throws IOException {
-        //create a sample task in a sample list
-        //call markComplete from EditItem class
+    void checkEditName() throws IOException {
+        //create a sample task in sample list
+        //call editDueDate fro EditItem class
         EditItem edit = new EditItem();
-        File file = new File("TestComplete.txt");
+        File file = new File("TestEditDueDate.txt");
         file.createNewFile();
-        String[] properties = new String[4];
-        String[] selectedProperties = new String[4];
+        String[] properties = new String[3];
+        String[] selectedProperties = new String[3];
         String currentLine;
-        selectedProperties[0] = "Test task";
-        selectedProperties[1] = "Test Description";
-        selectedProperties[2] = "2021/7/10";
-        selectedProperties[3] = "Incomplete";
+        selectedProperties[0] = "1234";
+        selectedProperties[1] = "2345234523";
+        selectedProperties[2] = "MMicah";
 
-        edit.addItem("TestComplete.txt", selectedProperties);
-        ItemObject testItem = new ItemObject(selectedProperties[0],selectedProperties[1], selectedProperties[2]);
-        Assertions.assertEquals(true, edit.markComplete("TestComplete.txt", testItem));
+        edit.addItem("TestEditDueDate.txt", selectedProperties);
+        ItemObject testItem = new ItemObject(Integer.parseInt(selectedProperties[0]),selectedProperties[1], selectedProperties[2]);
+        Assertions.assertEquals(true, edit.editName("TestEditDueDate.txt", testItem, "hmmmm"));
         file.delete();
 
-
-
-
-    }
-
-    @Test
-    void checkMarkIncomplete() throws IOException {
-        //create a sample list with sample text
-        //set task status to complete
-        //call markIncomplete in EditItem class
-        EditItem edit = new EditItem();
-        File file = new File("TestIncomplete.txt");
-        file.createNewFile();
-        String[] properties = new String[4];
-        String[] selectedProperties = new String[4];
-        String currentLine;
-        selectedProperties[0] = "Test task";
-        selectedProperties[1] = "Test Description";
-        selectedProperties[2] = "2021/7/10";
-        selectedProperties[3] = "Incomplete";
-
-        edit.addItem("TestIncomplete.txt", selectedProperties);
-        ItemObject testItem = new ItemObject(selectedProperties[0],selectedProperties[1], selectedProperties[2]);
-        edit.markComplete("TestIncomplete.txt", testItem);
-        testItem.setStatus("Complete");
-        Assertions.assertEquals(true, edit.markIncomplete("TestIncomplete.txt", testItem));
-        file.delete();
     }
 
 }

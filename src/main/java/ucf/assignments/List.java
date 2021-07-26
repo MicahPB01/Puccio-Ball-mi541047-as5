@@ -1,9 +1,7 @@
 package ucf.assignments;
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Micah Puccio-Ball
- *  Tasks are saved as...
- *  Name::Description::DueDate::Status
  */
 
 import javafx.application.Application;

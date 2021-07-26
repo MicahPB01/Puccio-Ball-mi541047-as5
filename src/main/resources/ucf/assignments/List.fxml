@@ -19,7 +19,7 @@
         <Accordion layoutX="175.0" layoutY="189.0" />
         <TableView fx:id="itemTable" layoutX="235.0" layoutY="14.0" prefHeight="174.0" prefWidth="509.0">
             <columns>
-                <TableColumn fx:id="ItemValue" prefWidth="137.0" resizable="false" text="Value" />
+                <TableColumn fx:id="ItemValue" prefWidth="137.0" resizable="false" text="Value (USD)" />
                 <TableColumn fx:id="ItemSerial" prefWidth="152.0" resizable="false" text="Serial Number" />
                 <TableColumn fx:id="ItemName" minWidth="0.0" prefWidth="218.0" resizable="false" text="Name" />
             </columns>

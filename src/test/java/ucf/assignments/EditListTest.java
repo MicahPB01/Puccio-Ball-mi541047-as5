@@ -13,7 +13,7 @@ class EditListTest {
     void checkLoadList() throws IOException {
         //call loadList function passing a test txt file
         //try to load the created txt file
-        //see if created txxt file is the file that is loaded
+        //see if created txt file is the file that is loaded
         File file = new File("test.txt");
         file.createNewFile();
         EditList load = new EditList();
@@ -24,18 +24,18 @@ class EditListTest {
 
     @Test
     void checkGetInfo() throws IOException {
-        //create sample tasks in a sample list
+        //create sample item in a sample list
         //call getInfo in LoadList class
         //call matches function from EditItem to see if the two items are identical
         EditItem edit = new EditItem();
         EditList load = new EditList();
         String[] properties = new String[3];
-        properties[0] = "Test";
-        properties[1] = "Test";
-        properties[2] = "2000/10/10";
+        properties[0] = String.valueOf(15);
+        properties[1] = "rtyurtyurt";
+        properties[2] = "Test";
         File file = new File("TestInfo.txt");
         file.createNewFile();
-        ItemObject testItem = new ItemObject("Test", "Test", "2000/10/10");
+        ItemObject testItem = new ItemObject(15, "rtyurtyurt", "Test");
 
         edit.addItem("TestInfo.txt", properties);
         ItemObject actualItem = load.getInfo(file).get(0);
@@ -44,66 +44,6 @@ class EditListTest {
         file.delete();
     }
 
-    @Test
-    void checkGetCompletedInfo() throws IOException {
-        //create sample tasks in a sample list
-        //call getCompletedInfo in LoadList class
-        //call matches function from EditItem to see if the item selected is indeed marked as completed
-        File file = new File("TestComplete.txt");
-        file.createNewFile();
-        EditItem edit = new EditItem();
-        EditList load = new EditList();
-        String[] properties1 = new String[3];
-        String[] properties2 = new String[3];
-        properties1[0] = "Test1";
-        properties2[0] = "Test2";
-        properties1[1] = "Test";
-        properties2[1] = "Test";
-        properties1[2] = "2000/10/10";
-        properties2[2] = "2000/10/10";
-        ItemObject testItem1 = new ItemObject("Test1", "Test", "2000/10/10");
-        ItemObject testItem2 = new ItemObject("Test2", "Test", "2000/10/10");
-
-        edit.addItem("TestComplete.txt", properties1);
-        edit.addItem("TestComplete.txt", properties2);
-        edit.markComplete("TestComplete.txt", testItem2);
-        testItem2.setStatus("Complete");
-
-        ArrayList<ItemObject> actualItems = load.getCompletedInfo(file);
-        Assertions.assertEquals(true, edit.matches(testItem2, actualItems.get(0)));
-        file.delete();
-
-    }
-
-    @Test
-    void checkGetIncompleteInfo() throws IOException {
-        //create sample tasks in a sample list
-        //call getCompletedInfo in LoadList class
-        //call matches function from EditItem to see if the item selected is indeed marked as Incomplete
-        File file = new File("TestIncomplete.txt");
-        file.createNewFile();
-        EditItem edit = new EditItem();
-        EditList load = new EditList();
-        String[] properties1 = new String[3];
-        String[] properties2 = new String[3];
-        properties1[0] = "Test1";
-        properties2[0] = "Test2";
-        properties1[1] = "Test";
-        properties2[1] = "Test";
-        properties1[2] = "2000/10/10";
-        properties2[2] = "2000/10/10";
-        ItemObject testItem1 = new ItemObject("Test1", "Test", "2000/10/10");
-        ItemObject testItem2 = new ItemObject("Test2", "Test", "2000/10/10");
-
-        edit.addItem("TestIncomplete.txt", properties1);
-        edit.addItem("TestIncomplete.txt", properties2);
-        edit.markComplete("TestIncomplete.txt", testItem2);
-        testItem2.setStatus("Complete");
-
-        ArrayList<ItemObject> actualItems = load.searchSerial(file);
-        Assertions.assertEquals(true, edit.matches(testItem1, actualItems.get(0)));
-        file.delete();
-    }
 
     @Test
     void checkSave() throws IOException {
@@ -118,18 +58,65 @@ class EditListTest {
     }
 
     @Test
-    void checkRemoveAll() throws IOException {
-        //create file
-        //call removeAll in EditList class
-        //assert true the result of removeAll
-        EditList remove = new EditList();
-        File file = new File("TestDelete.txt");
+    void checkSearchSerial() throws IOException {
+        //create sample items in a sample list
+        //call searchSerial in LoadList class
+        //call matches function from EditItem to see if the item selected is found
+        File file = new File("TestIncomplete.txt");
         file.createNewFile();
+        EditItem edit = new EditItem();
+        EditList load = new EditList();
+        String[] properties1 = new String[3];
+        String[] properties2 = new String[3];
+        properties1[0] = String.valueOf(15);
+        properties2[0] = String.valueOf(115);
+        properties1[1] = "XXXXXXXXXX";
+        properties2[1] = "ZZZZZZZZZZ";
+        properties1[2] = "test";
+        properties2[2] = "test";
+        ItemObject testItem1 = new ItemObject(15, "XXXXXXXXXX", "test");
+        ItemObject testItem2 = new ItemObject(15, "ZZZZZZZZZZ", "test");
 
-        Assertions.assertEquals(true, remove.removeAll("TestDelete.txt"));
+        edit.addItem("TestIncomplete.txt", properties1);
+        edit.addItem("TestIncomplete.txt", properties2);
+
+        ArrayList<ItemObject> actualItems = load.searchSerial(file, "XXXXXXXXXX");
+        Assertions.assertEquals(true, edit.matches(testItem1, actualItems.get(0)));
+        Assertions.assertEquals(false, edit.matches(testItem2, actualItems.get(0)));
         file.delete();
 
+    }
+
+    @Test
+    void checkSearchName() throws IOException {
+        //create sample items in a sample list
+        //call searchName in LoadList class
+        //call matches function from EditItem to see if the item selected is found
+        File file = new File("TestIncomplete.txt");
+        file.createNewFile();
+        EditItem edit = new EditItem();
+        EditList load = new EditList();
+        String[] properties1 = new String[3];
+        String[] properties2 = new String[3];
+        properties1[0] = String.valueOf(15);
+        properties2[0] = String.valueOf(115);
+        properties1[1] = "ZZZZZZZZZZ";
+        properties2[1] = "ZZZZZZZZZZ";
+        properties1[2] = "test";
+        properties2[2] = "testing";
+        ItemObject testItem1 = new ItemObject(15, "ZZZZZZZZZZ", "test");
+        ItemObject testItem2 = new ItemObject(15, "ZZZZZZZZZZ", "testing");
+
+        edit.addItem("TestIncomplete.txt", properties1);
+        edit.addItem("TestIncomplete.txt", properties2);
+
+        ArrayList<ItemObject> actualItems = load.searchName(file, "test");
+        Assertions.assertEquals(true, edit.matches(testItem1, actualItems.get(0)));
+        Assertions.assertEquals(false, edit.matches(testItem2, actualItems.get(0)));
+        file.delete();
 
     }
+
+
 
 }

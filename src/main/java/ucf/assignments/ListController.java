@@ -1,9 +1,7 @@
 package ucf.assignments;
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Micah Puccio-Ball
- *  Tasks are saved as...
- *  Name::Description::DueDate
  */
 
 import javafx.application.Platform;
@@ -17,12 +15,13 @@ import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ListController extends List {
-    public TableColumn<ItemObject, String> ItemValue;
+    public TableColumn<ItemObject, Integer> ItemValue;
     public TableColumn<ItemObject, String> ItemSerial;
     public TableColumn<ItemObject, String> ItemName;
     public TableView<ItemObject> itemTable;
@@ -46,21 +45,44 @@ public class ListController extends List {
         //if no file is loaded, create a new file
         //Call addItem in editItem class passing the current file path and the properties of the object
         //reload the table
-        boolean result;
+        boolean result = false;
         EditItem edit = new EditItem();
+        boolean check;
+        String path;
+        File file = new File("tempHTML.txt");
 
         String[] properties = new String[3];
         properties[0] = addItemValue.getText();
         properties[1] = addItemSerial.getText();
         properties[2] = addItemName.getText();
 
+        if(file.exists())   {
+            path = "tempHTML.txt";
+        }
+        else   {
+            path = pathToFile.getText();
+        }
+
+        
         if(pathToFile.getText().equalsIgnoreCase(""))   {
             File newFile = new File("Inventory.txt");
             newFile.createNewFile();
             pathToFile.setText(newFile.getAbsolutePath());
         }
+        check = edit.checkSerial(path, properties[1]);
+        
+        if(!check)   {
+            System.out.println("Adding");
+            result = edit.addItem(path, properties);
+        }
+        else {
+            Alert noSelection = new Alert(Alert.AlertType.INFORMATION);
+            noSelection.setTitle("Unable to add Item!");
+            noSelection.setHeaderText("Please check item requirements");
+            noSelection.setContentText("Please ensure the Serial matches \"XXXXXXXXXX\"\nPlease ensure serial is unique!\n");
+            noSelection.show();
+        }
 
-         result = edit.addItem(pathToFile.getText(), properties);
 
         if(!result)   {
             System.out.println("Loading");
@@ -106,12 +128,21 @@ public class ListController extends List {
         //reload the table
         boolean check;
         EditItem edit = new EditItem();
+        String path;
+        File file = new File("tempHTML.txt");
+
+        if(file.exists())   {
+            path = "tempHTML.txt";
+        }
+        else   {
+            path = pathToFile.getText();
+        }
 
         if(itemTable.getSelectionModel().getSelectedItem()!=null)    {
             ItemObject selectedObject = itemTable.getSelectionModel().getSelectedItem();
-            check = edit.editSerial(pathToFile.getText(), selectedObject, updateSerial.getText());
+            check = edit.editSerial(path, selectedObject, updateSerial.getText());
             if(check)   {
-                edit.editSerial(pathToFile.getText(), selectedObject, updateSerial.getText());
+                edit.editSerial(path, selectedObject, updateSerial.getText());
             }
             else   {
                 Alert noSelection = new Alert(Alert.AlertType.INFORMATION);
@@ -135,7 +166,7 @@ public class ListController extends List {
 
     @FXML
     public void searchSerialClick() {
-        //call load getIncompleteInfo from LoadList class passing the path stored in a text field
+        //call load.searchSerial from LoadList class passing the path stored in a text field
         //convert resulting arraylist into an observable arraylist
         //push data from the list to the table
         //reload table
@@ -190,6 +221,7 @@ public class ListController extends List {
 
         EditList load = new EditList();
         File file = load.loadList(pathToFile.getText());
+        File tempFile = new File("tempHTML.txt");
 
 
         pathToFile.setText(file.getPath());
@@ -204,6 +236,11 @@ public class ListController extends List {
         ItemSerial.setCellValueFactory(new PropertyValueFactory<>("serial"));
         ItemName.setCellValueFactory(new PropertyValueFactory<>("name"));
         itemTable.setItems(observableItems);
+        if(tempFile.exists())   {
+            PrintWriter writer = new PrintWriter(tempFile);
+            writer.print("");
+            writer.close();
+        }
 
     }
 
@@ -220,6 +257,10 @@ public class ListController extends List {
     }
 
     public void editNameClick(ActionEvent actionEvent) throws IOException {
+        //get new value
+        //call editName from EditItem class passing Path, the selected object, and the new value
+        //throw up a message if no task is selected
+        //reload the table
         boolean check;
         EditItem edit = new EditItem();
 
@@ -246,6 +287,10 @@ public class ListController extends List {
     }
 
     public void editValueClick(ActionEvent actionEvent) throws IOException {
+        //get new value
+        //call editValue from EditItem class passing Path, the selected object, and the new value
+        //throw up a message if no task is selected
+        //reload the table
         boolean check;
         EditItem edit = new EditItem();
 
@@ -272,6 +317,7 @@ public class ListController extends List {
     }
 
     public void showAllClick(ActionEvent actionEvent) throws IOException {
+        //load list
         loadHelper();
     }
 

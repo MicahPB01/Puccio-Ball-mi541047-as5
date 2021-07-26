@@ -1,9 +1,7 @@
 package ucf.assignments;
 /*
- *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
  *  Copyright 2021 Micah Puccio-Ball
- *  Tasks are saved as...
- *  Name::Description::DueDate::Status
  */
 
 import javafx.stage.FileChooser;
@@ -39,6 +37,9 @@ public class EditList {
     }
 
     public ArrayList<ItemObject> getInfo(File file) throws IOException {
+        //use provided file to scan each line in
+        //split each line by the tab character
+        //return arraylist of items
         System.out.println("Entered LoadList.getInfo");
         ArrayList<ItemObject> itemsInList = new ArrayList<>();
 
@@ -57,17 +58,13 @@ public class EditList {
 
             currentLine = bufferedReader.readLine();
 
-
-
                 while (currentLine != null) {
                     System.out.printf("%s\n", currentLine);
                     properties = currentLine.split("\t");
-                    ItemObject tempItem = new ItemObject(properties[0], properties[1], properties[2]);
+                    ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]) , properties[1], properties[2]);
                     itemsInList.add(tempItem);
                     currentLine = bufferedReader.readLine();
                 }
-
-
 
             bufferedReader.close();
         }
@@ -82,6 +79,10 @@ public class EditList {
 
 
     public ArrayList<ItemObject> searchName(File file, String name) {
+        //use provided file and scan in each line
+        //split the properties
+        //if the third property contains the provided string, add it to an arraylist
+        //return the arraylist
         System.out.println("Entered LoadList.searchName looking for "+name);
         ArrayList<ItemObject> itemsInList = new ArrayList<>();
 
@@ -96,7 +97,7 @@ public class EditList {
             while(currentLine != null)   {
                 System.out.printf("%s\n",currentLine);
                 properties = currentLine.split("\t");
-                ItemObject tempItem = new ItemObject(properties[0],properties[1],properties[2]);
+                ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
 
                 if(properties[2].contains(name)) {
                     itemsInList.add(tempItem);
@@ -113,6 +114,10 @@ public class EditList {
     }
 
     public ArrayList<ItemObject> searchSerial(File file, String serial) {
+        //use provided file and scan in each line
+        //split the properties
+        //if the second property contains the provided string, add it to an arraylist
+        //return the arraylist
         System.out.println("Entered LoadList.searchSerial");
         ArrayList<ItemObject> itemsInList = new ArrayList<>();
 
@@ -127,7 +132,7 @@ public class EditList {
             while(currentLine != null)   {
                 System.out.printf("%s\n",currentLine);
                 properties = currentLine.split("\t");
-                ItemObject tempItem = new ItemObject(properties[0],properties[1],properties[2]);
+                ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
 
                 if(properties[1].contains(serial)) {
                     itemsInList.add(tempItem);
@@ -191,6 +196,7 @@ public class EditList {
     }
 
     private boolean tabSave(String pathNew, File pathOld) throws IOException    {
+        //open a file and write each item property to it line by line separated by tabs
         System.out.println("Entered tab save");
         ArrayList<ItemObject> data;
         data = getInfo(pathOld);
@@ -214,6 +220,9 @@ public class EditList {
     }
 
     private boolean htmlSave(String pathNew, File pathOld) throws IOException {
+        //create file and fill it with generic html code
+        //loop thorugh the number of items adding each item to the table
+        //end file with the rest of the html tag
         System.out.println("Entered html save");
         ArrayList<ItemObject> data;
         data = getInfo(pathOld);
@@ -267,6 +276,11 @@ public class EditList {
     }
 
     public void convertHTML(File file) throws IOException {
+        //iterate through file
+        //skip the first lines which include the format code
+        //take 3 lines at a time to get the item properties
+        //skip a few lines, take the next 3 and so on
+        //create a temp file to use
         System.out.println("Entered convertHTML");
         File tempFile =  new File("tempHTML.txt");
         Path filePath  = Path.of(tempFile.getAbsolutePath());
