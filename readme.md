@@ -16,7 +16,7 @@ Editting the serial of an item:
 	Fill out the "Updated serial"  field
 	Click "Update serial" button
 
-Editting the name of an item:
+Editing the name of an item:
 	Select an item from the table
 	Fill out the "Updated name"  field
 	Click "Update name" button
