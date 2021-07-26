@@ -7,7 +7,6 @@ package ucf.assignments;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,7 +14,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class EditList {
@@ -210,7 +208,7 @@ public class EditList {
                 System.out.println("Writing " + i + data.get(i).getValue() + data.get(i).getSerial()+ data.get(i).getName());
                 Files.write(filePath, (data.get(i).getValue()
                         + "\t" + data.get(i).getSerial()
-                        + "\t" + data.get(i).getName() + "\n").getBytes(), StandardOpenOption.APPEND);;
+                        + "\t" + data.get(i).getName() + "\n").getBytes(), StandardOpenOption.APPEND);
             }
             catch(Exception ignored)   {
 
@@ -352,8 +350,6 @@ public class EditList {
 
         }
 
-
-        return;
     }
 
 

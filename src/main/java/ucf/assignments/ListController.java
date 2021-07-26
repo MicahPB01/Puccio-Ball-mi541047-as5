@@ -4,10 +4,8 @@ package ucf.assignments;
  *  Copyright 2021 Micah Puccio-Ball
  */
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,8 +14,6 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ListController extends List {
@@ -99,7 +95,7 @@ public class ListController extends List {
 
     }
     @FXML
-    public void removeItemClick() throws IOException, InterruptedException {
+    public void removeItemClick() throws IOException {
         //get info of selected item in list
         //Call removeItem in editItem class passing the itemObject
         //if no item is selected, throw up a message
@@ -256,7 +252,7 @@ public class ListController extends List {
 
     }
 
-    public void editNameClick(ActionEvent actionEvent) throws IOException {
+    public void editNameClick() throws IOException {
         //get new value
         //call editName from EditItem class passing Path, the selected object, and the new value
         //throw up a message if no task is selected
@@ -286,7 +282,7 @@ public class ListController extends List {
         loadHelper();
     }
 
-    public void editValueClick(ActionEvent actionEvent) throws IOException {
+    public void editValueClick() throws IOException {
         //get new value
         //call editValue from EditItem class passing Path, the selected object, and the new value
         //throw up a message if no task is selected
@@ -316,7 +312,7 @@ public class ListController extends List {
         loadHelper();
     }
 
-    public void showAllClick(ActionEvent actionEvent) throws IOException {
+    public void showAllClick() throws IOException {
         //load list
         loadHelper();
     }

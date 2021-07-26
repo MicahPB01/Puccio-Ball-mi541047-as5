@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 
 public class EditItem {
@@ -57,9 +56,6 @@ public class EditItem {
             if(ext.equalsIgnoreCase("txt")) {
                 Files.write((filePath), (properties[0] + "\t" + properties[1] + "\t" + properties[2] + "\n").getBytes(), StandardOpenOption.APPEND);
             }
-            if(ext.equalsIgnoreCase("html"))    {
-
-            }
         }
         catch(Exception ignored)   {
         }
@@ -73,9 +69,8 @@ public class EditItem {
         //take input file and check every line
         //if the second split in a line matches the serial trying to be added, return true
         System.out.println("Checking serial in file" + path);
-        String ext = path.substring((path.lastIndexOf(".")  + 1));
         String currentLine;
-        String[] properties = new String[0];
+        String[] properties;
         File file = new File(path);
         try {
             FileReader input = new FileReader(file);
@@ -103,14 +98,13 @@ public class EditItem {
     }
 
 
-    public boolean removeItem(String path, ItemObject item) throws IOException, InterruptedException {
+    public boolean removeItem(String path, ItemObject item) throws IOException {
         //find an entry in the txt file the matches the object the user selected
         //when the line is found call to the FileIO class
 
         System.out.print("Entered EditItem.removeItem\n");
         boolean removed = false;
         FileIO change = new FileIO();
-        String ext = path.substring((path.lastIndexOf(".")  + 1));
         String[] properties;
         String[] selectedProperties = new String[3];
         String currentLine;
@@ -173,7 +167,6 @@ public class EditItem {
         boolean updated = false;
 
         FileIO change = new FileIO();
-        String ext = path.substring((path.lastIndexOf(".")  + 1));
         String[] properties;
         String[] selectedProperties = new String[3];
         String currentLine;
@@ -201,15 +194,12 @@ public class EditItem {
                 ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
                 System.out.printf("Checking: %s %s %s\n",properties[0] , properties[1] , properties[2]);
 
-                if(!matches(item, tempItem))   {
-                    newFileData.add(currentLine);
-                }
-                else   {
+                if (matches(item, tempItem)) {
                     System.out.println("Found");
-                    currentLine =  newValue+"\t"+properties[1]+"\t"+properties[2];
+                    currentLine = newValue + "\t" + properties[1] + "\t" + properties[2];
                     updated = true;
-                    newFileData.add(currentLine);
                 }
+                newFileData.add(currentLine);
                 currentLine = bufferedReader.readLine();
             }
             bufferedReader.close();
@@ -236,7 +226,6 @@ public class EditItem {
         FileIO change = new FileIO();
         String[] properties;
         String[] selectedProperties = new String[3];
-        String ext = path.substring((path.lastIndexOf(".")  + 1));
         String currentLine;
         String newPath;
         selectedProperties[0] = String.valueOf(item.getValue());
@@ -269,16 +258,13 @@ public class EditItem {
                 ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
                 System.out.printf("Checking: %s %s %s\n",properties[0] , properties[1] , properties[2]);
 
-                if(!matches(item, tempItem))   {
-                    newFileData.add(currentLine);
-                }
-                else   {
+                if (matches(item, tempItem)) {
                     System.out.println("Found");
-                    currentLine = properties[0]+"\t"+newSerial+"\t"+properties[2];
+                    currentLine = properties[0] + "\t" + newSerial + "\t" + properties[2];
                     updated = true;
-                    newFileData.add(currentLine);
 
                 }
+                newFileData.add(currentLine);
                 currentLine = bufferedReader.readLine();
             }
             bufferedReader.close();
@@ -303,7 +289,6 @@ public class EditItem {
         String[] selectedProperties = new String[4];
         String currentLine;
         String newPath;
-        String ext = path.substring((path.lastIndexOf(".")  + 1));
         selectedProperties[0] = String.valueOf(item.getValue());
         selectedProperties[1] = item.getSerial();
         selectedProperties[2] = item.getName();
@@ -325,15 +310,12 @@ public class EditItem {
                 ItemObject tempItem = new ItemObject(Integer.parseInt(properties[0]),properties[1],properties[2]);
                 System.out.printf("Checking: %s %s %s\n",properties[0] , properties[1] , properties[2]);
 
-                if(!matches(item, tempItem))   {
-                    newFileData.add(currentLine);
-                }
-                else   {
+                if (matches(item, tempItem)) {
                     System.out.println("Found");
-                    currentLine = properties[0]+"\t"+properties[1]+"\t"+newName;
+                    currentLine = properties[0] + "\t" + properties[1] + "\t" + newName;
                     updated = true;
-                    newFileData.add(currentLine);
                 }
+                newFileData.add(currentLine);
                 currentLine = bufferedReader.readLine();
             }
             bufferedReader.close();
